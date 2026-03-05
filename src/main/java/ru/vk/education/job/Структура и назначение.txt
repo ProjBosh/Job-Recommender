@@ -1,3 +1,34 @@
+######################
+### Начальный этап ###
+######################
+
+job-recommender/
+└── src/
+    └── main/
+        └── java/
+            └── ru/
+                └── vk/
+                    └── education/
+                        └── job/
+                            ├── JobRecommenderApplication.java   # Точка входа с main и Scanner
+                            │
+                            ├── model/                           # Простые POJO классы
+                            │   ├── User.java                    # name, skills (List<String>), exp (int)
+                            │   ├── Vacancy.java                 # title, company, tags (List<String>), exp (int)
+                            │
+                            ├── service/                         # Бизнес-логика
+                            │   ├── RecommendationService.java   # suggest логика (поиск 2 лучших вакансий)
+                            │   └── StorageService.java          # Хранение users, vacancies, matches в памяти
+                            │
+                            └── cli/                              # Обработка команд
+                                ├── CommandProcessor.java         # Парсинг и маршрутизация команд
+                                └── Command.java                  # enum USER, JOB, USER_LIST, JOB_LIST, SUGGEST, EXIT
+
+
+
+##########################
+### Дальнейший вариант ###
+##########################
 job-recommender/
 └── src/
     └── main/
