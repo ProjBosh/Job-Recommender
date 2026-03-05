@@ -1,0 +1,57 @@
+job-recommender/
+└── src/
+    └── main/
+        └── java/
+            └── ru/
+                └── vk/
+                    └── education/
+                        └── job/                                  # Корневой пакет приложения
+                            ├── JobRecommenderApplication.java    # Точка входа, инициализация и запуск CLI
+                            │
+                            ├── model/                            # Доменные модели (бизнес-сущности)
+                            │   ├── user/                         # Пакет для моделей пользователя
+                            │   │   ├── User.java                 # Основная сущность пользователя
+                            │   │   ├── Skill.java                # Value object - навык пользователя
+                            │   │   └── Experience.java           # Value object - опыт работы
+                            │   │
+                            │   ├── vacancy/                      # Пакет для моделей вакансий
+                            │   │   ├── Vacancy.java              # Основная сущность вакансии
+                            │   │   ├── Tag.java                  # Value object - тег вакансии
+                            │   │   ├── Company.java              # Value object - компания
+                            │   │   └── RequiredExperience.java   # Value object - требуемый опыт
+                            │   │
+                            │   └── match/                        # Пакет для моделей сопоставления
+                            │       ├── Match.java                # Связка пользователь-вакансия
+                            │       ├── MatchScore.java           # Value object - результат мэтчинга
+                            │       └── MatchedSkill.java         # Конкретные совпавшие навыки
+                            │
+                            ├── service/                          # Бизнес-логика приложения
+                            │   ├── recommendation/               # Логика рекомендаций
+                            │   │   ├── RecommendationService.java # Главный сервис рекомендаций
+                            │   │   ├── MatchCalculator.java      # Алгоритм подсчета совпадений
+                            │   │   └── ExperienceValidator.java  # Проверка соответствия опыта
+                            │   │
+                            │   └── storage/                      # Хранение данных в памяти
+                            │       ├── StorageService.java       # Фасад для работы с хранилищем
+                            │       ├── UserRepository.java       # CRUD для пользователей
+                            │       ├── VacancyRepository.java    # CRUD для вакансий
+                            │       └── MatchRepository.java      # CRUD для мэтчей
+                            │
+                            ├── cli/                              # Интерфейс командной строки
+                            │   ├── CommandProcessor.java         # Главный процессор команд
+                            │   ├── Command.java                  # Enum всех доступных команд
+                            │   ├── handlers/                     # Обработчики команд
+                            │   │   ├── UserCommandHandler.java   # Обработка user команды
+                            │   │   ├── VacancyCommandHandler.java # Обработка job команды
+                            │   │   ├── SuggestCommandHandler.java # Обработка suggest команды
+                            │   │   └── ListCommandHandler.java   # Обработка *-list команд
+                            │   │
+                            │   └── parsers/                      # Парсеры аргументов
+                            │       ├── CommandParser.java        # Главный парсер команд
+                            │       ├── UserCommandParser.java    # Парсер аргументов user
+                            │       └── VacancyCommandParser.java # Парсер аргументов job
+                            │
+                            └── util/                             # Вспомогательные утилиты
+                                ├── StringUtils.java              # Работа со строками (split, trim)
+                                ├── CollectionUtils.java          # Работа с коллекциями (удаление дубликатов)
+                                └── Validator.java                # Валидация входных данных
