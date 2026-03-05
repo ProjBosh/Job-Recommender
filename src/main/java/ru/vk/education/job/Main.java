@@ -14,7 +14,7 @@ public class Main {
 
             if (command.equals("exit")) { break; }
 
-            System.out.println(command);
+//            System.out.println(command);
             commandProcessor.split(command);
         }
 
