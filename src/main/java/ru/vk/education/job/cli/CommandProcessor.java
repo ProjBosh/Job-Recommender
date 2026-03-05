@@ -8,8 +8,19 @@ public class CommandProcessor {
         String command = parts[0];
 
         if (command.equals("user")) {
-            parseCommandUser(parts);
+            parseCommandUser(parts);            // Добавление пользователя
         } else if (command.equals("user-list")) {
+            // TODO: Реализовать вывод пользователей
+
+        } else if (command.equals("job")) {
+            // TODO: Реализовать добавление вакансии
+
+        } else if (command.equals("job-list")) {
+            // TODO: Реализовать вывод вакансий
+
+        }
+        else if (command.equals("suggest")) {
+            // TODO: Реализовать вывод выводит не больше 2 вакансий
 
         }
     }
@@ -65,4 +76,5 @@ public class CommandProcessor {
             }
         }
     }
+
 }
