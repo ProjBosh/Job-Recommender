@@ -7,5 +7,9 @@ public class User {
     private List<String> skills;    // Список навыков
     private int experience;         // Опыт
 
-
+    public User(String firstName, List<String> skills, int experience) {
+        this.firstName = firstName;
+        this.skills = skills;
+        this.experience = experience;
+    }
 }
