@@ -24,4 +24,8 @@ public class VacancyRepository {
     }
 
     public boolean find(String vacancy) { return vacancyByName.containsKey(vacancy); }
+
+    public Set<Vacancy> getVacancies() {
+        return vacancies;
+    }
 }
