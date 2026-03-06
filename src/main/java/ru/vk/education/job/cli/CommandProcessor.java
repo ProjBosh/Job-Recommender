@@ -2,6 +2,7 @@ package ru.vk.education.job.cli;
 
 import ru.vk.education.job.model.user.User;
 import ru.vk.education.job.model.user.UserRepository;
+import ru.vk.education.job.model.vacancy.VacancyRepository;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -15,12 +16,8 @@ public class CommandProcessor {
         switch (command) {
             case "user" -> parseCommandUser(parts);                         // Добавление пользователя
             case "user-list" -> new UserRepository().printList();           // Вывод списка пользователей
-            case "job" -> {
-                // TODO: Реализовать добавление вакансии
-            }
-            case "job-list" -> {
-                // TODO: Реализовать вывод вакансий
-            }
+            case "job" -> parseCommandVacancy(parts);              // Добавление вакансии
+            case "job-list" -> new VacancyRepository().printList();         // Вывод списка вакансий
             case "suggest" -> {
                 // TODO: Реализовать вывод выводит не больше 2 вакансий
             }
@@ -72,5 +69,9 @@ public class CommandProcessor {
                 System.err.println("Ошибка валидации: " + e.getMessage());
             }
         }
+    }
+
+    private void parseCommandVacancy(String[] parts) {
+
     }
 }
