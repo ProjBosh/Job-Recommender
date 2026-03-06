@@ -11,7 +11,8 @@ public class User {
     public User() {}
 
     public User(String firstName, Set<String> skills, int experience) {
-        if (new User().nameIsEnteredCorrectly(firstName) && !(new UserRepository().find(firstName))) {
+        // Проверяем корректность имени и существование пользователя
+        if (nameIsEnteredCorrectly(firstName) && !(new UserRepository().find(firstName))) {
             this.firstName = firstName;
             this.skills = skills;
             this.experience = experience;

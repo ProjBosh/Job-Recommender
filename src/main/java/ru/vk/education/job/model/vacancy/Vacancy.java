@@ -12,11 +12,14 @@ public class Vacancy {
     public Vacancy() {}
 
     public Vacancy(String jobTitle, String company, Set<String> tags, int experience) {
+        // Проверяем корректность названия и существование вакансии
         if (vacancyIsEnteredCorrectly(jobTitle) && !(new VacancyRepository().find(jobTitle))) {
             this.jobTitle = jobTitle;
             this.company = company;
             this.tags = tags;
             this.experience = experience;
+            // Добавление в хранилище вакансий
+            new VacancyRepository(this);
         }
     }
 
