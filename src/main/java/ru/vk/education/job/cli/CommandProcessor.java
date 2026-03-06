@@ -1,5 +1,6 @@
 package ru.vk.education.job.cli;
 
+import ru.vk.education.job.service.recommendation.RecommendationService;
 import ru.vk.education.job.service.storage.UserRepository;
 import ru.vk.education.job.service.storage.VacancyRepository;
 
@@ -14,9 +15,7 @@ public class CommandProcessor {
             case "user-list" -> new UserRepository().printList();           // Вывод списка пользователей
             case "job" -> commandParser.parseCommandVacancy(parts);         // Добавление вакансии
             case "job-list" -> new VacancyRepository().printList();         // Вывод списка вакансий
-            case "suggest" -> {
-                // TODO: Реализовать вывод выводит не больше 2 вакансий
-            }
+            case "suggest" -> new RecommendationService().findVacancy(parts[1]);
         }
     }
 }
