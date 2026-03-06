@@ -17,11 +17,18 @@ job-recommender/
                             │   ├── Vacancy.java                 # title, company, tags (List<String>), exp (int)
                             │
                             ├── service/                         # Бизнес-логика
-                            │   ├── RecommendationService.java   # suggest логика (поиск 2 лучших вакансий)
-                            │   └── StorageService.java          # Хранение users, vacancies, matches в памяти
+                            │   ├── recommendation/
+                            │   │   ├── RecommendationService.java   # suggest логика (поиск 2 лучших вакансий)
+                            │   │
+                            │   ├── storage
+                            │   │   ├── StorageService.java          # Хранение users, vacancies, matches в памяти
+                            │   │   ├── UserRepository.java
+                            │   │   ├── VacancyRepository.java
                             │
                             └── cli/                              # Обработка команд
-                                ├── CommandProcessor.java         # Парсинг и маршрутизация команд
+                                ├── CommandProcessor.java         # Маршрутизация команд
+                                ├── Command.enum                  # Основные команды: USER, USER_LIST, JOB, JOB_LIST, SUGGEST, EXIT
+                                ├── CommandParser.java            # Парсер команд
 
 
 
