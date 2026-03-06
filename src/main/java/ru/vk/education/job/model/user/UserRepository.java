@@ -22,7 +22,5 @@ public class UserRepository {
                 user.getExperience()));
     }
 
-    public boolean find(String firstName) {
-        return userByName.containsKey(firstName);
-    }
+    public boolean find(String firstName) { return userByName.containsKey(firstName); }
 }
