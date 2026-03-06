@@ -1,5 +1,7 @@
 package ru.vk.education.job.model.vacancy;
 
+import ru.vk.education.job.service.storage.VacancyRepository;
+
 import java.util.HashSet;
 import java.util.Set;
 

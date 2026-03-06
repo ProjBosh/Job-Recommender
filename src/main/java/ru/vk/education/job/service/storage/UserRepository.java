@@ -1,4 +1,6 @@
-package ru.vk.education.job.model.user;
+package ru.vk.education.job.service.storage;
+
+import ru.vk.education.job.model.user.User;
 
 import java.util.HashMap;
 import java.util.HashSet;

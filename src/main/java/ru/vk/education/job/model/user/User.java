@@ -1,5 +1,7 @@
 package ru.vk.education.job.model.user;
 
+import ru.vk.education.job.service.storage.UserRepository;
+
 import java.util.HashSet;
 import java.util.Set;
 

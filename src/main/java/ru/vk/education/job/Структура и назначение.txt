@@ -22,7 +22,6 @@ job-recommender/
                             │
                             └── cli/                              # Обработка команд
                                 ├── CommandProcessor.java         # Парсинг и маршрутизация команд
-                                └── Command.java                  # enum USER, JOB, USER_LIST, JOB_LIST, SUGGEST, EXIT
 
 
 
