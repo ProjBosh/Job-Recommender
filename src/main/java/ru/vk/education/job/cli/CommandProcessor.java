@@ -1,13 +1,7 @@
 package ru.vk.education.job.cli;
 
-import ru.vk.education.job.model.user.User;
 import ru.vk.education.job.service.storage.UserRepository;
-import ru.vk.education.job.model.vacancy.Vacancy;
 import ru.vk.education.job.service.storage.VacancyRepository;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 public class CommandProcessor {
     public void split(String inputLine) {
