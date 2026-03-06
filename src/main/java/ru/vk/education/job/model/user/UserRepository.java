@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class UserRepository {
-    private static Set<User> users = new HashSet<>();
-    private static Map<String, User> userByName = new HashMap<>();
+    private static final Set<User> users = new HashSet<>();
+    private static final Map<String, User> userByName = new HashMap<>();
 
     public UserRepository() {}
 
@@ -17,7 +17,6 @@ public class UserRepository {
     }
 
     public void printList() {
-        System.out.println("List: " + users.size());
         for (User user : users) {
             System.out.println(user.getFirstName() + " " +
                             String.join(",", user.getSkills()) + " " +
