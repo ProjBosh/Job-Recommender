@@ -17,11 +17,9 @@ public class UserRepository {
     }
 
     public void printList() {
-        for (User user : users) {
-            System.out.println(user.getFirstName() + " " +
-                            String.join(",", user.getSkills()) + " " +
-                            user.getExperience());
-        }
+        users.forEach(user -> System.out.println(user.getFirstName() + " " +
+                String.join(",", user.getSkills()) + " " +
+                user.getExperience()));
     }
 
     public boolean find(String firstName) {
