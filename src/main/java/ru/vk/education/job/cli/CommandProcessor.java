@@ -1,27 +1,29 @@
 package ru.vk.education.job.cli;
 
-import java.util.Scanner;
+import ru.vk.education.job.model.user.User;
+import ru.vk.education.job.model.user.UserRepository;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CommandProcessor {
     public void split(String inputLine) {
         String[] parts = inputLine.split(" ");
         String command = parts[0];
 
-        if (command.equals("user")) {
-            parseCommandUser(parts);            // Добавление пользователя
-        } else if (command.equals("user-list")) {
-            // TODO: Реализовать вывод пользователей
-
-        } else if (command.equals("job")) {
-            // TODO: Реализовать добавление вакансии
-
-        } else if (command.equals("job-list")) {
-            // TODO: Реализовать вывод вакансий
-
-        }
-        else if (command.equals("suggest")) {
-            // TODO: Реализовать вывод выводит не больше 2 вакансий
-
+        switch (command) {
+            case "user" -> parseCommandUser(parts);                         // Добавление пользователя
+            case "user-list" -> new UserRepository().printList();           // Вывод списка пользователей
+            case "job" -> {
+                // TODO: Реализовать добавление вакансии
+            }
+            case "job-list" -> {
+                // TODO: Реализовать вывод вакансий
+            }
+            case "suggest" -> {
+                // TODO: Реализовать вывод выводит не больше 2 вакансий
+            }
         }
     }
     /*
@@ -29,44 +31,39 @@ public class CommandProcessor {
         Добавление пользователя в системы
      */
     private void parseCommandUser(String[] parts) {
-        String username = parts[1];
-        String[] skills = new String[0];
+        String userFirstName = parts[1];
 
-        int experience = 0;
+        // Проверяем корректность имени
+        if (new User().nameIsEnteredCorrectly(userFirstName)) {
+            // Проверяем существование пользователя в системе
+            if (!(new UserRepository().find(userFirstName))) {
+                try {
+                    Set<String> skills = new HashSet<>();
+                    int experience = 0;
 
-        if (username != null && !username.trim().isEmpty()) {
-            try {
-//                System.out.println("Имя пользователя: " + username);
-                for (int i = 2; i < parts.length; i++) {
-                    String param = parts[i];    // например, --skills=java,ml,linux
+                    for (int i = 2; i < parts.length; i++) {
+                        String param = parts[i];    // например, --skills=java,ml,linux
 
-                    // Убираем "--"
-                    String withoutPrefix = param.substring(2);
+                        // Убираем "--"
+                        String withoutPrefix = param.substring(2);
 
-                    // Разбиваем по "="
-                    String[] keyValue = withoutPrefix.split("=");
-                    String key = keyValue[0];       // "skills"
-                    String value = keyValue[1];     // "java,ml,linux"
+                        // Разбиваем по "="
+                        String[] keyValue = withoutPrefix.split("=");
+                        String key = keyValue[0];       // "skills"
+                        String value = keyValue[1];     // "java,ml,linux"
 
-                    if (key.equals("skills")) {
-                        skills = value.split(",");
-                    } else if (key.equals("exp")) {
-                        experience = Integer.parseInt(value);
+                        if (key.equals("skills")) {
+                            skills = new HashSet<>(Arrays.asList(value.split(",")));
+                        } else if (key.equals("exp")) {
+                            experience = Integer.parseInt(value);
+                        }
                     }
+
+                    // Добавление нового пользователя
+                    User user = new User(userFirstName, skills, experience);
+                } catch (Exception e) {
+                    System.err.println("Ошибка при обработке имени: " + e.getMessage());
                 }
-
-                // TODO: Реализовать заполнение данных в класс User
-
-                /*
-                 * Демонстрационный вывод данных в консоль для тестирования
-                    System.out.print(username + " ");
-                    for (String skill : skills) {
-                        System.out.print(skill + " ");
-                    }
-                    System.out.println(experience);
-                 */
-            } catch (Exception e) {
-                System.err.println("Ошибка при обработке имени: " + e.getMessage());
             }
         } else {
             try {
@@ -76,5 +73,4 @@ public class CommandProcessor {
             }
         }
     }
-
 }
