@@ -5,42 +5,37 @@ import ru.vk.education.job.model.vacancy.Vacancy;
 import ru.vk.education.job.service.storage.UserRepository;
 import ru.vk.education.job.service.storage.VacancyRepository;
 
-import java.util.Set;
-import java.util.Map;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 public class RecommendationService {
+
+    private int RECOMMENDATION_LIMIT = 2;
 
     public RecommendationService() {}
 
     public void findVacancy(String firstName) {
         User username = new UserRepository().getUser(firstName);
-        Set<String> skills = username.getSkills();
-        int experience = username.getExperience();
-        Set<Vacancy> vacancies = new VacancyRepository().getVacancies();
 
         // Используем LinkedHashMap для сохранения порядка сортировки
-        Map<String, Double> ratings = new LinkedHashMap<>();
+        Map<Vacancy, Double> ratings = new LinkedHashMap<>();
 
         // Обход каждой вакансии
-        for (Vacancy vacancy : vacancies) {
-            double countMatchingSkills = getCountMatchingSkills(vacancy, skills, experience);
+        for (Vacancy vacancy : new VacancyRepository().getVacancies()) {
+            double countMatchingSkills = getCountMatchingSkills(vacancy, username.getSkills(), username.getExperience());
 
-            ratings.put(vacancy.getJobTitle(), countMatchingSkills);
+            ratings.put(vacancy, countMatchingSkills);
         }
 
         // Сортировка по убыванию (более логично для рейтинга)
-        List<Map.Entry<String, Double>> sortedList = ratings.entrySet()
+        List<Map.Entry<Vacancy, Double>> sortedList = ratings.entrySet()
                 .stream()
-                .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .toList();
 
         // Вывод результатов
         sortedList.stream()
-                .limit(2)
-                .forEach(entry -> System.out.println(entry.getKey() + ": " + entry.getValue()));
+                .limit(RECOMMENDATION_LIMIT)
+                .forEach(entry -> System.out.println(entry.getKey().getJobTitle() + " at " + entry.getKey().getCompany()));
     }
 
     private static double getCountMatchingSkills(Vacancy vacancy, Set<String> skills, int experience) {

@@ -2,20 +2,21 @@ package ru.vk.education.job.service.storage;
 
 import ru.vk.education.job.model.user.User;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class UserRepository {
-    private static final Set<User> users = new HashSet<>();
-    private static final Map<String, User> userByName = new HashMap<>();
+    private static Set<User> users = new HashSet<>();
+    private static Map<String, User> userByName = new HashMap<>();
 
-    public UserRepository() {}
+    public UserRepository() {
+        sortCollections();
+    }
 
     public UserRepository(User user) {
         users.add(user);
         userByName.put(user.getFirstName(), user);
+        sortCollections();
     }
 
     public void printList() {
@@ -28,5 +29,16 @@ public class UserRepository {
 
     public User getUser(String firstName) {
         return userByName.get(firstName);
+    }
+
+    private void sortCollections() {
+        // Сортируем Set путем создания нового TreeSet
+        Set<User> sortedUsers = new TreeSet<>(Comparator.comparing(User::getFirstName));
+        sortedUsers.addAll(users);
+        users = sortedUsers;
+
+        // Сортируем Map путем создания нового TreeMap
+        Map<String, User> sortedMap = new TreeMap<>(userByName);
+        userByName = sortedMap;
     }
 }

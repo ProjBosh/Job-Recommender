@@ -9,7 +9,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while(true) {
-            System.out.print("Input command: ");
+//            System.out.print("Input command: ");
             String command = scanner.nextLine();
             if (command.equals("exit")) { break; }
             commandProcessor.split(command);
