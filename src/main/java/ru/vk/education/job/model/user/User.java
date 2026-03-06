@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class User {
     private String firstName ;                      // Имя пользователя
-    private Set<String> skills = new HashSet<>();   // Список навыков
+    private Set<String> skills = new HashSet<>();   // Список навыков (аналог tags в классе Vacancy)
     private int experience;                         // Опыт
 
     public User() {}
