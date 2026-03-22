@@ -8,49 +8,60 @@ import ru.vk.education.job.service.storage.VacancyRepository;
 import java.util.*;
 
 public class RecommendationService {
-
-    private int RECOMMENDATION_LIMIT = 2;
-
     public RecommendationService() {}
 
     public void findVacancy(String firstName) {
-        User username = new UserRepository().getUser(firstName);
+        User user = new UserRepository().getUser(firstName);
 
-        // Используем LinkedHashMap для сохранения порядка сортировки
-        Map<Vacancy, Double> ratings = new LinkedHashMap<>();
-
-        // Обход каждой вакансии
-        for (Vacancy vacancy : new VacancyRepository().getVacancies()) {
-            double countMatchingSkills = getCountMatchingSkills(vacancy, username.getSkills(), username.getExperience());
-
-            ratings.put(vacancy, countMatchingSkills);
+        // Check if user exists
+        if (user == null) {
+            System.out.println("No matches found");
+            return;
         }
 
-        // Сортировка по убыванию (более логично для рейтинга)
-        List<Map.Entry<Vacancy, Double>> sortedList = ratings.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .toList();
+        List<Vacancy> vacancies = new VacancyRepository().getVacanciesList();
+        
+        // Create map with ratings
+        Map<Vacancy, Double> vacanciesRating = new HashMap<>();
 
-        // Вывод результатов
-        sortedList.stream()
-                .limit(RECOMMENDATION_LIMIT)
-                .forEach(entry -> System.out.println(entry.getKey().getJobTitle() + " at " + entry.getKey().getCompany()));
+        for (Vacancy vacancy : vacancies) {
+            double matchCount = calculateRating(vacancy, user.getSkills(), user.getExperience());
+            if (matchCount > 0.0) {
+                vacanciesRating.put(vacancy, matchCount);
+            }
+        }
+
+        if (vacanciesRating.isEmpty()) {
+            System.out.println("No matches found");
+            return;
+        }
+
+        // Sort by rating descending
+        List<Vacancy> result = new ArrayList<>(vacanciesRating.keySet());
+        result.sort((v1, v2) -> {
+            Double score1 = vacanciesRating.get(v1);
+            Double score2 = vacanciesRating.get(v2);
+            return Double.compare(score2, score1);
+        });
+
+        // Output top 2 vacancies
+        int count = Math.min(2, result.size());
+        for (int i = 0; i < count; i++) {
+            Vacancy vacancy = result.get(i);
+            System.out.println(vacancy.getJobTitle() + " at " + vacancy.getCompany());
+        }
     }
 
-    private static double getCountMatchingSkills(Vacancy vacancy, Set<String> skills, int experience) {
-        double countMatchingSkills = 0.0;
-        Set<String> vacancyTags = vacancy.getTags(); // Сохраняем в локальную переменную
-
-        // Проверяем пересечение множеств для оптимизации
+    private double calculateRating(Vacancy vacancy, Set<String> skills, int experience) {
+        // Count matching skills
         Set<String> matchedSkills = new HashSet<>(skills);
-        matchedSkills.retainAll(vacancyTags); // Оставляем только совпадающие навыки
+        matchedSkills.retainAll(vacancy.getTags());
+        int matchingCount = matchedSkills.size();
 
-        // Считаем совпадения
-        for (String matchedSkill : matchedSkills) {
-            countMatchingSkills += (experience >= vacancy.getExperience() ? 1 : 0.5);
+        // If experience is insufficient, divide the count by 2
+        if (experience < vacancy.getExperience()) {
+            return matchingCount / 2.0;
         }
-
-        return countMatchingSkills;
+        return matchingCount;
     }
 }

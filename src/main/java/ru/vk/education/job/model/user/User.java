@@ -6,20 +6,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class User {
-    private String firstName ;                      // Имя пользователя
-    private Set<String> skills = new HashSet<>();   // Список навыков (аналог tags в классе Vacancy)
-    private int experience;                         // Опыт
+    private String firstName;
+    private Set<String> skills = new HashSet<>();
+    private int experience;
 
     public User() {}
 
     public User(String firstName, Set<String> skills, int experience) {
-        // Проверяем корректность имени и существование пользователя
-        if (nameIsEnteredCorrectly(firstName) && !(new UserRepository().find(firstName))) {
+        if (nameIsEnteredCorrectly(firstName)) {
             this.firstName = firstName;
-            this.skills = skills;
+            this.skills = skills != null ? new HashSet<>(skills) : new HashSet<>();
             this.experience = experience;
-            // Добавление в хранилище пользователя
-            new UserRepository(this);
+            // Add to storage
+            new UserRepository().addUser(this);
         }
     }
 
@@ -32,7 +31,7 @@ public class User {
     }
 
     public Set<String> getSkills() {
-        return skills;
+        return new HashSet<>(skills);
     }
 
     public int getExperience() {

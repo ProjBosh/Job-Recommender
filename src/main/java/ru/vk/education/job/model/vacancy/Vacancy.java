@@ -6,22 +6,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Vacancy {
-    private String jobTitle;                        // Название вакансии
-    private String company;                         // Название компании (дальше можно использовать класс Company)
-    private Set<String> tags = new HashSet<>();     // Список навыков (аналог skills в классе User)
-    private int experience;                         // Требуемый опыт
+    private String jobTitle;
+    private String company;
+    private Set<String> tags = new HashSet<>();
+    private int experience;
 
     public Vacancy() {}
 
     public Vacancy(String jobTitle, String company, Set<String> tags, int experience) {
-        // Проверяем корректность названия и существование вакансии
-        if (vacancyIsEnteredCorrectly(jobTitle) && !(new VacancyRepository().find(jobTitle))) {
+        if (vacancyIsEnteredCorrectly(jobTitle)) {
             this.jobTitle = jobTitle;
             this.company = company;
-            this.tags = tags;
+            this.tags = tags != null ? new HashSet<>(tags) : new HashSet<>();
             this.experience = experience;
-            // Добавление в хранилище вакансий
-            new VacancyRepository(this);
+            // Add to storage
+            new VacancyRepository().addVacancy(this);
         }
     }
 
@@ -38,7 +37,7 @@ public class Vacancy {
     }
 
     public Set<String> getTags() {
-        return tags;
+        return new HashSet<>(tags);
     }
 
     public int getExperience() {

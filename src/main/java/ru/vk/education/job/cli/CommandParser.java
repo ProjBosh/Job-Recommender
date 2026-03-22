@@ -13,100 +13,116 @@ public class CommandParser {
 
     public CommandParser() {}
 
-    /*
-        Разбиение команды user <name> --skills=... --exp=... на компоненты
-        Добавление пользователя
-     */
     public void parseCommandUser(String[] parts) {
+        if (parts.length < 2) {
+            return;
+        }
+        
         String userFirstName = parts[1];
 
-        // Проверяем корректность имени
-        if (new User().nameIsEnteredCorrectly(userFirstName)) {
-            // Проверяем существование пользователя
-            if (!(new UserRepository().find(userFirstName))) {
-                try {
-                    Set<String> skills = new HashSet<>();
-                    int experience = 0;
+        // Check if user already exists
+        if (new UserRepository().find(userFirstName)) {
+            return; // User already exists, don't add again
+        }
 
-                    for (int i = 2; i < parts.length; i++) {
-                        String param = parts[i];    // например, --skills=java,ml,linux --exp=2
+        // Check if name is valid
+        if (!new User().nameIsEnteredCorrectly(userFirstName)) {
+            return;
+        }
 
-                        // Убираем "--"
-                        String withoutPrefix = param.substring(2);
+        try {
+            Set<String> skills = new HashSet<>();
+            int experience = 0;
 
-                        // Разбиваем по "="
-                        String[] keyValue = withoutPrefix.split("=");
-                        String key = keyValue[0];       // "skills / exp"
-                        String value = keyValue[1];     // "java,ml,linux / 2"
+            for (int i = 2; i < parts.length; i++) {
+                String param = parts[i];
+                
+                if (!param.startsWith("--")) {
+                    continue;
+                }
 
-                        if (key.equals("skills")) {
-                            skills = new HashSet<>(Arrays.asList(value.split(",")));
-                        } else if (key.equals("exp")) {
-                            experience = Integer.parseInt(value);
-                        }
-                    }
+                // Remove "--"
+                String withoutPrefix = param.substring(2);
+                
+                // Split by "="
+                String[] keyValue = withoutPrefix.split("=", 2);
+                if (keyValue.length != 2) {
+                    continue;
+                }
+                
+                String key = keyValue[0];
+                String value = keyValue[1];
 
-                    // Добавление нового пользователя
-                    new User(userFirstName, skills, experience);
-                } catch (Exception e) {
-                    System.err.println("Ошибка при обработке имени: " + e.getMessage());
+                if (key.equals("skills")) {
+                    String[] skillArray = value.split(",");
+                    skills = new HashSet<>(Arrays.asList(skillArray));
+                } else if (key.equals("exp")) {
+                    experience = Integer.parseInt(value);
                 }
             }
-        } else {
-            try {
-                throw new IllegalArgumentException("Имя пользователя не может быть пустым");
-            } catch (IllegalArgumentException e) {
-                System.err.println("Ошибка валидации: " + e.getMessage());
-            }
+
+            // Create new user (this will automatically add to repository)
+            new User(userFirstName, skills, experience);
+        } catch (Exception e) {
+            // Ignore parsing errors
         }
     }
 
-    /*
-        Разбиение команды job <title> --company=... --skills=... --exp=... на компоненты
-        Добавление вакансии
-     */
     public void parseCommandVacancy(String[] parts) {
+        if (parts.length < 2) {
+            return;
+        }
+        
         String jobTitle = parts[1];
 
-        // Проверяем корректность вакансии
-        if (new Vacancy().vacancyIsEnteredCorrectly(jobTitle)) {
-            // Проверяем существование вакансии
-            if (!new VacancyRepository().find(jobTitle)) {
-                try {
-                    String company = "";
-                    Set<String> tags = new HashSet<>();
-                    int experience = 0;
+        // Check if vacancy already exists
+        if (new VacancyRepository().find(jobTitle)) {
+            return; // Vacancy already exists, don't add again
+        }
 
-                    for (int i = 2; i < parts.length; i++) {
-                        String param = parts[i];    // например, --company=VK --tags=java,ml,linux --exp=1
+        // Check if title is valid
+        if (!new Vacancy().vacancyIsEnteredCorrectly(jobTitle)) {
+            return;
+        }
 
-                        // Убираем "--"
-                        String withoutPrefix = param.substring(2);
+        try {
+            String company = "";
+            Set<String> tags = new HashSet<>();
+            int experience = 0;
 
-                        // Разбиваем по "="
-                        String[] keyValue = withoutPrefix.split("=");
-                        String key = keyValue[0];       // "company / tags / exp"
-                        String value = keyValue[1];     // "VK / java,ml,linux / 1"
+            for (int i = 2; i < parts.length; i++) {
+                String param = parts[i];
+                
+                if (!param.startsWith("--")) {
+                    continue;
+                }
 
-                        switch (key) {
-                            case "company" -> company = value;
-                            case "tags" -> tags = new HashSet<>(Arrays.asList(value.split(",")));
-                            case "exp" -> experience = Integer.parseInt(value);
-                        }
+                // Remove "--"
+                String withoutPrefix = param.substring(2);
+                
+                // Split by "="
+                String[] keyValue = withoutPrefix.split("=", 2);
+                if (keyValue.length != 2) {
+                    continue;
+                }
+                
+                String key = keyValue[0];
+                String value = keyValue[1];
+
+                switch (key) {
+                    case "company" -> company = value;
+                    case "tags" -> {
+                        String[] tagArray = value.split(",");
+                        tags = new HashSet<>(Arrays.asList(tagArray));
                     }
-
-                    // Добавление новой вакансии
-                    new Vacancy(jobTitle, company, tags, experience);
-                } catch (IllegalArgumentException e) {
-                    System.err.println("Ошибка при обработке названия вакансии: " + e.getMessage());
+                    case "exp" -> experience = Integer.parseInt(value);
                 }
             }
-        } else {
-            try {
-                throw new IllegalArgumentException("Название вакансии не может быть пустым");
-            } catch (IllegalArgumentException e) {
-                System.err.println("Ошибка валидации: " + e.getMessage());
-            }
+
+            // Create new vacancy (this will automatically add to repository)
+            new Vacancy(jobTitle, company, tags, experience);
+        } catch (Exception e) {
+            // Ignore parsing errors
         }
     }
 }
