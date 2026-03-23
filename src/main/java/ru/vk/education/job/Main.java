@@ -1,5 +1,8 @@
 package ru.vk.education.job;
 
+import ru.vk.education.job.cli.CommandParser;
+import ru.vk.education.job.service.FileService;
+
 import java.util.Scanner;
 
 public class Main {

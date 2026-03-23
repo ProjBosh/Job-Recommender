@@ -1,4 +1,4 @@
-package ru.vk.education.job;
+package ru.vk.education.job.cli;
 
 import java.util.HashMap;
 import java.util.Map;

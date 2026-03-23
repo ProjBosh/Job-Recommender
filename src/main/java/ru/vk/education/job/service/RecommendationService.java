@@ -1,4 +1,8 @@
-package ru.vk.education.job;
+package ru.vk.education.job.service;
+
+import ru.vk.education.job.cli.RatingVacancy;
+import ru.vk.education.job.model.User;
+import ru.vk.education.job.model.Vacancy;
 
 import java.util.ArrayList;
 import java.util.List;

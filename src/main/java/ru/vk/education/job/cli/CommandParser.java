@@ -1,4 +1,9 @@
-package ru.vk.education.job;
+package ru.vk.education.job.cli;
+
+import ru.vk.education.job.service.FileService;
+import ru.vk.education.job.service.RecommendationService;
+import ru.vk.education.job.model.User;
+import ru.vk.education.job.model.Vacancy;
 
 import java.util.Arrays;
 import java.util.HashSet;

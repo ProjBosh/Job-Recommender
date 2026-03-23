@@ -1,4 +1,6 @@
-package ru.vk.education.job;
+package ru.vk.education.job.service;
+
+import ru.vk.education.job.cli.CommandParser;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

@@ -1,4 +1,4 @@
-package ru.vk.education.job;
+package ru.vk.education.job.model;
 
 import java.util.*;
 
