@@ -8,14 +8,4 @@ job Backend_Dev --company=VK --tags=java,backend,linux --exp=1
 user-list
 job-list
 stat --match 1
-user alice --skills=java,ml,linux --exp=2
-user bob --skills=java --exp=10
-user fred --skills=linux,c++ --exp=10
-user piter --skills=c,python --exp=10
-user john --skills=c --exp=10
-user john --skills=c --exp=10user mary --skills=c --exp=10
-job Backend_Dev --company=VK --tags=java,backend,linux --exp=1
-user-list
-job-list
-stat --match 1
 stat --match 1

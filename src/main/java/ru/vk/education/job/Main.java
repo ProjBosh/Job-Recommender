@@ -13,8 +13,8 @@ public class Main {
 
         // Инициализируем чтение команд из файла и испольнение команд "user ..." и "job ..."
         new FileService().executeCommandWithFile();
-        // Инициализируем заполнение рейтинга совпадений у пользователей по вакансиям
-        new RecommendationRepository().init();
+//        // Инициализируем заполнение рейтинга совпадений у пользователей по вакансиям
+//        new RecommendationRepository().init();
 
         while(!getOut) {
             String command = scanner.nextLine().trim();
