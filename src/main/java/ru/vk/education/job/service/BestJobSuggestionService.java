@@ -1,4 +1,4 @@
-package ru.vk.education.job;
+package ru.vk.education.job.service;
 
 import ru.vk.education.job.model.model.User;
 import ru.vk.education.job.model.model.Vacancy;
@@ -9,21 +9,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-// На более ранних этапах ты уже создал(а) скелет работающего приложения, создал(а) сущности, а также простой CLI (Command Line Interface) интерфейс для работы с ними.
-// В рамках текущей домашки №4 добавим немного асинхронности.
-// Нужно реализовать фоновый процесс (код, работающий в отдельном потоке), который регулярно (например, раз в минуту) будет искать лучшее предложение по работе для каждого
-// юзера в системе.
-// Для простоты, пусть эти предложения просто показываются в консоль, например, в виде:
-// ```
-// Bob, лучшее предложение — ML Engineer в Google
-// Alice, лучшее предложение — Java Developer at VK
-// ```
-// Чтобы запускать код в отдельном потоке, да еще и периодически, нужно в `Main` классе создать нужный `ExecutorService`. Это сервис, который будет запускать ваш код в
-// отдельном потоке.
-// Далее у него нужно вызвать нужный `scheduleXXX()` метод. Их всего 4 варианта. Разобраться, какой именно нужен.
-// Код, который будет искать лучшее предложение для каждого юзера, реализовать в отдельном классе. Экземпляр этого класса будет передаваться в метод `scheduleXXX()`.
-// Также стоит разобраться с корректным плавным завершением работы `ExecutorService`
 
 public class BestJobSuggestionService implements Runnable {
     private static Map<User, Vacancy> map = new HashMap<>();

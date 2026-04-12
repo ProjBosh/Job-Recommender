@@ -1,6 +1,5 @@
 package ru.vk.education.job.service;
 
-import ru.vk.education.job.BestJobSuggestionService;
 import ru.vk.education.job.model.model.User;
 import ru.vk.education.job.model.rating.RatingVacancy;
 import ru.vk.education.job.model.repository.RecommendationRepository;
