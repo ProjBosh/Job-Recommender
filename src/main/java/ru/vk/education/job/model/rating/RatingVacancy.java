@@ -22,7 +22,9 @@ public class RatingVacancy {
         setJobName(jobName);
         setPoint(point);
 
-        if (!rating.containsKey(jobName))
+        if (rating.containsKey(jobName))
+            rating.replace(jobName, point);
+        else
             rating.put(jobName, point);
     }
 
