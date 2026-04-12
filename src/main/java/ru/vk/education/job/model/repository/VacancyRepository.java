@@ -29,7 +29,7 @@ public class VacancyRepository {
      * @param v - Вакансия
      */
     private void printlnVacancy(Vacancy v) {
-        System.out.println(v.getJobName() + " at " + v.getCompany());
+        System.out.println(getAJobWithdrawalTemplate(v));
     }
 
     /**
@@ -62,7 +62,15 @@ public class VacancyRepository {
      * Getters and Setters
      */
 
+    public Vacancy getVacancy(final String jobName) {
+        return vacanciesByName.get(jobName);
+    }
+
     public List<Vacancy> getVacancies(){
         return vacancies;
+    }
+
+    public String getAJobWithdrawalTemplate(Vacancy v) {
+        return v.getJobName() + " at " + v.getCompany();
     }
 }
