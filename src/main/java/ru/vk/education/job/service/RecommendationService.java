@@ -1,17 +1,15 @@
 package ru.vk.education.job.service;
 
+import ru.vk.education.job.BestJobSuggestionService;
 import ru.vk.education.job.model.model.User;
 import ru.vk.education.job.model.rating.RatingVacancy;
 import ru.vk.education.job.model.repository.RecommendationRepository;
 import ru.vk.education.job.model.repository.UserRepository;
 import ru.vk.education.job.model.repository.VacancyRepository;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Objects;
+import java.util.*;
 
 public class RecommendationService {
-    private final long TOP_RESULT = 2;
 
     public RecommendationService() {}
 
@@ -54,6 +52,9 @@ public class RecommendationService {
                 .sorted(Comparator.comparingDouble(RatingVacancy::getPoint).reversed())
                 .forEach(ratingVacancies::add);
 
+        // Сохраняем рейтинг вакансий для пользователей
+        new BestJobSuggestionService().saveRatingVacancyForUser(user, new VacancyRepository().getVacancy(ratingVacancies.get(0).getJobName()));
+
         return ratingVacancies;
     }
 
@@ -64,8 +65,8 @@ public class RecommendationService {
      * @param ratingVacancies - заполненный рейтинг с вакансиями
      */
     private void printlnRatingVacancies(final ArrayList<RatingVacancy> ratingVacancies) {
+        long TOP_RESULT = 2;
         ratingVacancies.stream()
-//                .sorted(Comparator.comparingDouble(RatingVacancy::getPoint).reversed())
                 .limit(TOP_RESULT)
                 .forEach(rv -> System.out.println(rv.getJobName() + " " + rv.getPoint()));
     }
