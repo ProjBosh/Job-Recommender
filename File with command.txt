@@ -1,11 +1,19 @@
 user alice --skills=java,ml,linux --exp=2
-user bob --skills=java --exp=10
-user fred --skills=linux,c++ --exp=10
-user piter --skills=c,python --exp=10
-user john --skills=c --exp=10
-user mary --skills=c --exp=10
-job Backend_Dev --company=VK --tags=java,backend,linux --exp=1
+user bob --skills=python,backend --exp=10
+user fred --skills=linux,c++ --exp=1
+job Backend_Alice --company=VK --tags=java,backend,linux --exp=3
+job Backend_Bob --company=VK --tags=python,backend --exp=1
+job Backend_Fred --company=VK --tags=c++ --exp=1
 user-list
 job-list
 stat --match 1
+job Backend_Alice2 --company=VK --tags=java,ml,linux --exp=2
+user piter --skills=c,python --exp=3
+user-list
+job-list
+suggest alice
+history
+stat --exp 1
 stat --match 1
+stat --top-skills 3
+suggest alice
