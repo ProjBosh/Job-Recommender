@@ -3,9 +3,7 @@ package ru.vk.education.job.model.repository;
 import ru.vk.education.job.model.model.User;
 import ru.vk.education.job.service.RecommendationService;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class RecommendationRepository {
@@ -20,7 +18,10 @@ public class RecommendationRepository {
      * @param countMatches - Количество совпадений
      */
     public void save(final User u, final long countMatches) {
-        ratingMatches.put(u, countMatches);
+        if (ratingMatches.containsKey(u))
+            ratingMatches.replace(u, countMatches);
+        else
+            ratingMatches.put(u, countMatches);
     }
 
     /**
