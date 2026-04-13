@@ -38,21 +38,18 @@ public class RecommendationService {
      * @param user - Пользователь
      * @return Отсортированный и отфильтрованный рейтинг вакансий
      */
-    private ArrayList<RatingVacancy> getRatingVacancies(final User user) {
+    public ArrayList<RatingVacancy> getRatingVacancies(final User user) {
         ArrayList<RatingVacancy> ratingVacancies = new ArrayList<>();
 
         new VacancyRepository().getVacancies().stream()
                 .map(v -> {
                     double point = v.countCommonSkills(user.getSkills());
                     double points = (point > 0 && user.getExperience() >= v.getExperience() ? point : (point / 2));
-                    return points > 0 ? new RatingVacancy(v.getJobName(), points): null;
+                    return points > 0 ? new RatingVacancy(v.getJobName(), points) : null;
                 })
                 .filter(Objects::nonNull)
                 .sorted(Comparator.comparingDouble(RatingVacancy::getPoint).reversed())
                 .forEach(ratingVacancies::add);
-
-        // Сохраняем рейтинг вакансий для пользователей
-        new BestJobSuggestionService().saveRatingVacancyForUser(user, new VacancyRepository().getVacancy(ratingVacancies.get(0).getJobName()));
 
         return ratingVacancies;
     }
