@@ -2,12 +2,10 @@ package ru.vk.education.job.service;
 
 import ru.vk.education.job.model.model.User;
 import ru.vk.education.job.model.model.Vacancy;
-import ru.vk.education.job.model.rating.RatingVacancy;
 import ru.vk.education.job.model.repository.UserRepository;
 import ru.vk.education.job.model.repository.VacancyRepository;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class BestJobSuggestionService implements Runnable {
     public BestJobSuggestionService() {}
@@ -40,15 +38,21 @@ public class BestJobSuggestionService implements Runnable {
                 .forEach(System.out::println);
     }
 
+    /**
+     * Ищет лучшую вакансию для пользователя
+     *
+     * @param u - Пользователь
+     * @param vacancies - Список вакансий
+     * @return Лучшую вакансию для пользователя
+     */
     public Vacancy findBestVacancyForUser(User u, List<Vacancy> vacancies) {
-        Vacancy bestVacancy = new Vacancy();
+        Vacancy bestVacancy = null;
         double maxPoints = 0;
+
         for (Vacancy v : vacancies) {
             double point = v.countCommonSkills(u.getSkills());
-
             if (point > 0) {
                 double points = u.getExperience() >= v.getExperience() ? point : (point / 2);
-
                 if (maxPoints < points) {
                     bestVacancy = v;
                     maxPoints = points;
