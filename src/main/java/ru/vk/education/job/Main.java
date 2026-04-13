@@ -30,8 +30,23 @@ public class Main {
             }
         }
 
-        // При завершение программы
-        EndTheBackgroundProcess(executorService, periodDelay);
+        // Завершение фонового процесса
+        executorService.shutdown(); // Прекращаем принимать новые задачи
+        try {
+            // Ожидаем завершения текущих задач
+            if (!executorService.awaitTermination(periodDelay + 10, TimeUnit.SECONDS)) {
+                executorService.shutdownNow(); // Принудительно прерываем
+                if(!executorService.awaitTermination(5, TimeUnit.SECONDS)) {
+                    // Пул потоков не завершился принудительно
+                }
+            }
+        } catch (InterruptedException e) {
+            // Восстанавливаем статус прерывания текущего потока
+            Thread.currentThread().interrupt();
+            // Пытаемся завершить принудительно
+            executorService.shutdown();
+        }
+
         scanner.close();
         System.exit(0);
     }
@@ -48,23 +63,5 @@ public class Main {
                 periodDelay,
                 TimeUnit.SECONDS
         );
-    }
-
-    /**
-     * Завершение фонового процесса
-     * @param executorService - Сервис исполнитель (Планировщик)
-     * @param periodDelay - период ожидания до завершения последней принятой задачи
-     */
-    public static void EndTheBackgroundProcess(ScheduledExecutorService executorService, int periodDelay) {
-        Runtime.getRuntime().addShutdownHook(new Thread(() ->{
-            executorService.shutdown(); // Прекращаем принимать новые задачи
-            try {
-                // Ожидаем завершения текущих задач
-                if (!executorService.awaitTermination(periodDelay, TimeUnit.SECONDS))
-                    executorService.shutdownNow(); // Принудительно прерываем
-            } catch (InterruptedException e) {
-                executorService.shutdown();
-            }
-        }));
     }
 }
