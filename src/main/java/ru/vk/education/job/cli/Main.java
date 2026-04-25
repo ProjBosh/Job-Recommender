@@ -1,8 +1,7 @@
-package ru.vk.education.job;
+package ru.vk.education.job.cli;
 
-import ru.vk.education.job.cli.CommandParser;
-import ru.vk.education.job.service.BestJobSuggestionService;
-import ru.vk.education.job.service.FileService;
+import ru.vk.education.job.cli.service.BestJobSuggestionService;
+import ru.vk.education.job.cli.service.FileService;
 
 import java.util.Scanner;
 import java.util.concurrent.*;

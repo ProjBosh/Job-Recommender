@@ -1,4 +1,4 @@
-package ru.vk.education.job.model.rating;
+package ru.vk.education.job.cli.model.rating;
 
 import java.util.HashMap;
 import java.util.Map;

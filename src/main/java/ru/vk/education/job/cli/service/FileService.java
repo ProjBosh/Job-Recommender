@@ -1,4 +1,4 @@
-package ru.vk.education.job.service;
+package ru.vk.education.job.cli.service;
 
 import ru.vk.education.job.cli.CommandParser;
 

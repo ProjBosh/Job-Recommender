@@ -1,7 +1,7 @@
-package ru.vk.education.job.model.model;
+package ru.vk.education.job.cli.model.model;
 
-import ru.vk.education.job.model.repository.RecommendationRepository;
-import ru.vk.education.job.model.repository.VacancyRepository;
+import ru.vk.education.job.cli.model.repository.RecommendationRepository;
+import ru.vk.education.job.cli.model.repository.VacancyRepository;
 
 import java.util.*;
 

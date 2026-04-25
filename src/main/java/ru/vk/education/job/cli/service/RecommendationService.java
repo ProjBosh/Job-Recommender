@@ -1,10 +1,10 @@
-package ru.vk.education.job.service;
+package ru.vk.education.job.cli.service;
 
-import ru.vk.education.job.model.model.User;
-import ru.vk.education.job.model.rating.RatingVacancy;
-import ru.vk.education.job.model.repository.RecommendationRepository;
-import ru.vk.education.job.model.repository.UserRepository;
-import ru.vk.education.job.model.repository.VacancyRepository;
+import ru.vk.education.job.cli.model.model.User;
+import ru.vk.education.job.cli.model.rating.RatingVacancy;
+import ru.vk.education.job.cli.model.repository.RecommendationRepository;
+import ru.vk.education.job.cli.model.repository.UserRepository;
+import ru.vk.education.job.cli.model.repository.VacancyRepository;
 
 import java.util.*;
 

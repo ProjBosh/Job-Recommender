@@ -1,7 +1,7 @@
-package ru.vk.education.job.model.repository;
+package ru.vk.education.job.cli.model.repository;
 
-import ru.vk.education.job.model.model.User;
-import ru.vk.education.job.service.RecommendationService;
+import ru.vk.education.job.cli.model.model.User;
+import ru.vk.education.job.cli.service.RecommendationService;
 
 import java.util.*;
 import java.util.stream.Stream;

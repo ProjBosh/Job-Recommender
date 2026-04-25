@@ -1,6 +1,6 @@
-package ru.vk.education.job.model.repository;
+package ru.vk.education.job.cli.model.repository;
 
-import ru.vk.education.job.model.model.User;
+import ru.vk.education.job.cli.model.model.User;
 
 import java.util.*;
 
