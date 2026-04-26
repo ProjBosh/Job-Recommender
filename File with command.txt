@@ -17,3 +17,10 @@ stat --exp 1
 stat --match 1
 stat --top-skills 3
 suggest alice
+stat exp 5
+job dfs company=djskf tags=j,d,f exp=5
+job-list
+stat exp 1
+stat --exp 1
+stat --exp 5
+stat --exp 2
