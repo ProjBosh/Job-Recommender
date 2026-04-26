@@ -27,16 +27,12 @@ public class StatService {
 
         // Для каждого пользователя ищем количество подходящих вакансий
         for(User user : userRepository.findAll()) {
-            int points = 0;
             // Получаем количество подходящих вакансий для пользователя по навыкам
-            for(Vacancy vacancy : vacancyRepository.findAll()) {
-                double numberOfMatchingSkills = vacancy.getTags().stream()
-                    .filter(user.getSkills()::contains)
+            int points = (int) vacancyRepository.findAll().stream()
+                    .filter(v -> vacancyRepository.getTheNumberOfMatchingSkills(v, user) > 0)
                     .count();
-                points += numberOfMatchingSkills > 0 ? 1 : 0;
-            }
+            // Сохраняем пользователя и количество подходящих ваканий
             if (points > 0) {
-                // Сохраняем пользователя и количество подходящих ваканий
                 ratingVacancies.put(user, points);
             }
         }
