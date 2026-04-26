@@ -14,12 +14,12 @@ java {
 	}
 }
 
-//// ### Данный блок нужен для запуска CLI блока
-//jar {
-//    manifest {
-//        attributes('Main-Class': 'ru.vk.education.job.Main')
-//    }
-//}
+// ### Данный блок нужен для запуска CLI блока
+jar {
+    manifest {
+        attributes('Main-Class': 'ru.vk.education.job.Main')
+    }
+}
 
 // ### Данный блок нужен для запуска Spring блока
 springBoot {
