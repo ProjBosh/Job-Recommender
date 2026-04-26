@@ -3,6 +3,7 @@ package ru.vk.education.job.boot.repository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.vk.education.job.boot.domain.User;
 import ru.vk.education.job.boot.domain.Vacancy;
@@ -13,8 +14,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class VacancyRepository {
     private final Map<Long, Vacancy> storage = new ConcurrentHashMap<>();
     private final AtomicLong idGenerator = new AtomicLong();

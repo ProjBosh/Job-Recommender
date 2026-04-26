@@ -1,6 +1,7 @@
 package ru.vk.education.job.boot.repository;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.vk.education.job.boot.domain.User;
 
@@ -10,6 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 @Getter
+@RequiredArgsConstructor
 public class UserRepository {
     private final Map<Long, User> storage = new ConcurrentHashMap<>();
     private final AtomicLong idGenerator = new AtomicLong(1);
