@@ -23,11 +23,11 @@ public class StatService {
 
     public List<User> getMatchesUser(int minCountMatch) {
         // Создаем карту рейтинга по числу подходящих вакансий
-        Map<User, Double> ratingVacancies = new HashMap<>();
+        Map<User, Integer> ratingVacancies = new HashMap<>();
 
         // Для каждого пользователя ищем количество подходящих вакансий
         for(User user : userRepository.findAll()) {
-            double points = 0;
+            int points = 0;
             // Получаем количество подходящих вакансий для пользователя по навыкам
             for(Vacancy vacancy : vacancyRepository.findAll()) {
                 double numberOfMatchingSkills = vacancy.getTags().stream()
@@ -49,12 +49,22 @@ public class StatService {
     }
 
     public List<String> getTopSkills(int skillCount) {
-        // TODO: Получить список навыков
-        // 1. Обойти каждого пользователя и получить его навыки
-        // 2. Собрать рейтинг навыков в Map<String, Long>
-        // 3. Получить Топ-N
-        // 4. Вернуть List<String>
+        // Создаем карту для рейтинга
+        Map<String, Integer> ratingSkills = new HashMap<>();
 
-        return null;
+        // Получаем рейтинг популярности по навыкам пользователей
+        for(User user : userRepository.findAll()) {
+            for(String skill : user.getSkills()) {
+                ratingSkills.put(skill, ratingSkills.containsKey(skill) ? ratingSkills.get(skill) + 1 : 1);
+            }
+        }
+
+        // Получаем Топ-N и возваращаем список навыков
+        return ratingSkills.entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue(Comparator.reverseOrder())
+                        .thenComparing(Map.Entry.comparingByKey()))
+                .limit(skillCount)
+                .map(Map.Entry::getKey)
+                .toList();
     }
 }
