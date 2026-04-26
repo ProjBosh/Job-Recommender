@@ -3,7 +3,6 @@ package ru.vk.education.job.boot.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.vk.education.job.boot.domain.Vacancy;
-import ru.vk.education.job.boot.repository.RecommendationRepository;
 import ru.vk.education.job.boot.repository.VacancyRepository;
 
 import java.util.Comparator;
