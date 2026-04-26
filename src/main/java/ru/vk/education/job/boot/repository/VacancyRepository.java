@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Repository;
+import ru.vk.education.job.boot.domain.User;
 import ru.vk.education.job.boot.domain.Vacancy;
 
 import java.util.*;
@@ -30,6 +31,11 @@ public class VacancyRepository {
                 );
     }
 
+    public long getTheNumberOfMatchingSkills(Vacancy vacancy, User user) {
+        return vacancy.getTags().stream()
+                .filter(user.getSkills()::contains)
+                .count();
+    }
 
     public boolean isPresent(Long id) {
         return storage.containsKey(id);
