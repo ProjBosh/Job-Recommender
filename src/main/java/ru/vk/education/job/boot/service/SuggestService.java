@@ -16,6 +16,13 @@ public class SuggestService {
     private final UserRepository userRepository;
     private final VacancyService vacancyService;
 
+    /**
+     * Получить Топ-N вакансий, подходящих пользователю
+     *
+     * @param user - пользователь
+     * @param countVacancy - количество вакансий
+     * @return Список вакансий
+     */
     public List<Vacancy> getTopSuggestVacancy(User user, int countVacancy) {
         Map<Vacancy, Double> ratingSuggestVacancy = new HashMap<>();
 
@@ -36,6 +43,9 @@ public class SuggestService {
                 .toList();
     }
 
+    /**
+     * Подобрать лучшую вакансию для пользователей
+     */
     public void findBestVacancies() {
         for(User user : userRepository.findAll()) {
             List<Vacancy> listVacancy = getTopSuggestVacancy(user, 1);

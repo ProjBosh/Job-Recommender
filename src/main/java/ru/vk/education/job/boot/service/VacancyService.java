@@ -37,6 +37,13 @@ public class VacancyService {
                 .orElseThrow(() -> new RuntimeException("Вакансия в id " + id + " не найдена"));
     }
 
+    /**
+     * Получить количество совпадающих навыков у пользователя для вакансии
+     *
+     * @param vacancy - вакансия
+     * @param user - пользователь
+     * @return Количество совпадающих навыков
+     */
     public long getTheNumberOfMatchingSkills(Vacancy vacancy, User user) {
         return vacancy.getTags().stream()
                 .filter(user.getSkills()::contains)

@@ -16,12 +16,24 @@ public class StatService {
     private final VacancyRepository vacancyRepository;
     private final VacancyService vacancyService;
 
+    /**
+     * Получить список вакансий, у которых требуемый опыта больше переданного значения
+     *
+     * @param minExperience - минимальное количество опыта
+     * @return Список вакансий
+     */
     public List<Vacancy> getMatchesVacancy(int minExperience) {
         return vacancyRepository.findAll().stream()
                 .filter(v -> v.getExperience() >= minExperience)
                 .toList();
     }
 
+    /**
+     * Получить список пользователей, у которых минимум N подходящих вакансий
+     *
+     * @param minCountMatch - минимальное количество подходящих вакансий
+     * @return Список пользователей
+     */
     public List<User> getMatchesUser(int minCountMatch) {
         // Создаем карту рейтинга по числу подходящих вакансий
         Map<User, Integer> ratingVacancies = new HashMap<>();
@@ -56,6 +68,12 @@ public class StatService {
                 .toList();
     }
 
+    /**
+     * Получить список Топ-N навыков всех пользователей
+     *
+     * @param skillCount - количество навыков, которые необходимо получить
+     * @return Список Топ-N навыков
+     */
     public List<String> getTopSkills(int skillCount) {
         // Создаем карту для рейтинга
         Map<String, Integer> ratingSkills = new HashMap<>();

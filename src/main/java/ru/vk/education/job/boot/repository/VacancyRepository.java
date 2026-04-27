@@ -19,6 +19,13 @@ public class VacancyRepository {
     private final Map<Long, Vacancy> storage = new ConcurrentHashMap<>();
     private final AtomicLong idGenerator = new AtomicLong();
 
+    /**
+     * Проверить наличие вакансии в хранилище по названию и компании
+     *
+     * @param jobName - название вакансии
+     * @param company - название компании
+     * @return Отметка о наличие вакансии в хранилище
+     */
     public boolean existsByField(String jobName, String company) {
         return storage.values().stream()
                 .anyMatch(vacancy ->

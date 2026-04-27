@@ -16,6 +16,12 @@ public class UserRepository {
     private final Map<Long, User> storage = new ConcurrentHashMap<>();
     private final AtomicLong idGenerator = new AtomicLong(1);
 
+    /**
+     * Проверить наличие пользователя в хранилище по имени
+     *
+     * @param firstName - имя пользователя
+     * @return Отметка о наличие пользователя в хранилище
+     */
     public boolean existsByField(String firstName) {
         return storage.values().stream()
                 .anyMatch(user -> user.getFirstName().equals(firstName));
