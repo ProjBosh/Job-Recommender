@@ -2,6 +2,7 @@ package ru.vk.education.job.boot.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vk.education.job.boot.domain.User;
 import ru.vk.education.job.boot.domain.Vacancy;
 import ru.vk.education.job.boot.repository.VacancyRepository;
 
@@ -34,6 +35,12 @@ public class VacancyService {
     public Vacancy getVacancy(Long id) {
         return vacancyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Вакансия в id " + id + " не найдена"));
+    }
+
+    public long getTheNumberOfMatchingSkills(Vacancy vacancy, User user) {
+        return vacancy.getTags().stream()
+                .filter(user.getSkills()::contains)
+                .count();
     }
 
     public Vacancy addVacancy(String jobName, String company, Set<String> tags, int experience) {
