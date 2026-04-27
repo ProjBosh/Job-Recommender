@@ -18,12 +18,12 @@ import java.util.Set;
 public class JobController {
     private final VacancyService vacancyService;
 
-    @GetMapping
+    @GetMapping("/all-vacancies")
     public ResponseEntity<List<Vacancy>> getAllVacancies() {
         return ResponseEntity.ok(vacancyService.getAllVacancies());
     }
 
-    @PostMapping
+    @PostMapping("/add-vacancy")
     public ResponseEntity<?> addVacancy(@RequestBody Vacancy request) {
         Set<String> uniqueTags = new HashSet<>(request.getTags());
 

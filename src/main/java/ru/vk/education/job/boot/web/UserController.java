@@ -13,17 +13,17 @@ import java.util.Map;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping("/all-users")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @PostMapping
+    @PostMapping("/add-user")
     public ResponseEntity<?> addUser(@RequestBody User request) {
         Set<String> uniqueSkills = new HashSet<>(request.getSkills());
 
