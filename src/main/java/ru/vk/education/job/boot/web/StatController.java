@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vk.education.job.boot.domain.User;
 import ru.vk.education.job.boot.domain.Vacancy;
@@ -24,7 +25,9 @@ public class StatController {
      * @return Список подходящих вакансий
      */
     @GetMapping("/exp")
-    public ResponseEntity<List<Vacancy>> getMatchesVacancy(int experience) {
+    public ResponseEntity<List<Vacancy>> getMatchesVacancy(
+            @RequestParam(value="exp", defaultValue="0") int experience
+    ) {
         if (experience < 0) {
             experience = 0;
         }
@@ -37,7 +40,9 @@ public class StatController {
      * @return Список подходящих пользователей
      */
     @GetMapping("/match")
-    public ResponseEntity<List<User>> getMatchesUser(int matchCount) {
+    public ResponseEntity<List<User>> getMatchesUser(
+            @RequestParam(value="cou", defaultValue="0") int matchCount
+    ) {
         if (matchCount < 0) {
             matchCount = 0;
         }
@@ -50,7 +55,9 @@ public class StatController {
      * @return Список Топ-N навыков
      */
     @GetMapping("/top-skills")
-    public ResponseEntity<List<String>> getTopSkills(int skillCount) {
+    public ResponseEntity<List<String>> getTopSkills(
+            @RequestParam(value="cou", defaultValue="0") int skillCount
+    ) {
         if (skillCount < 0) {
             skillCount = 0;
         }
