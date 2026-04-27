@@ -41,7 +41,7 @@ public class StatController {
      */
     @GetMapping("/match")
     public ResponseEntity<List<User>> getMatchesUser(
-            @RequestParam(value="cou", defaultValue="0") int matchCount
+            @RequestParam(value="count", defaultValue="0") int matchCount
     ) {
         if (matchCount < 0) {
             matchCount = 0;
@@ -56,7 +56,7 @@ public class StatController {
      */
     @GetMapping("/top-skills")
     public ResponseEntity<List<String>> getTopSkills(
-            @RequestParam(value="cou", defaultValue="0") int skillCount
+            @RequestParam(value="count", defaultValue="0") int skillCount
     ) {
         if (skillCount < 0) {
             skillCount = 0;
