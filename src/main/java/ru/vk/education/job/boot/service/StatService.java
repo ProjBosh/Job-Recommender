@@ -14,6 +14,7 @@ import java.util.*;
 public class StatService {
     private final UserRepository userRepository;
     private final VacancyRepository vacancyRepository;
+    private final VacancyService vacancyService;
 
     public List<Vacancy> getMatchesVacancy(int minExperience) {
         return vacancyRepository.findAll().stream()
@@ -25,13 +26,24 @@ public class StatService {
         // Создаем карту рейтинга по числу подходящих вакансий
         Map<User, Integer> ratingVacancies = new HashMap<>();
 
-        // Для каждого пользователя ищем количество подходящих вакансий
-        for(User user : userRepository.findAll()) {
-            // Получаем количество подходящих вакансий для пользователя по навыкам
-            int points = (int) vacancyRepository.findAll().stream()
-                    .filter(v -> vacancyRepository.getTheNumberOfMatchingSkills(v, user) > 0)
-                    .count();
-            // Сохраняем пользователя и количество подходящих ваканий
+        // 1. Индексируем вакансии по навыкам (один раз)
+        Map<String, List<Vacancy>> vacanciesBySkill = new HashMap<>();
+        for (Vacancy vacancy : vacancyRepository.findAll()) {
+            for (String tag : vacancy.getTags()) {
+                vacanciesBySkill.computeIfAbsent(tag, k -> new ArrayList<>()).add(vacancy);
+            }
+        }
+
+        // 2. Для каждого пользователя считаем уникальные вакансии
+        for (User user : userRepository.findAll()) {
+            Set<Vacancy> matchedVacancies = new HashSet<>();
+
+            for (String skill : user.getSkills()) {
+                List<Vacancy> candidates = vacanciesBySkill.getOrDefault(skill, List.of());
+                matchedVacancies.addAll(candidates);
+            }
+
+            int points = matchedVacancies.size();
             if (points > 0) {
                 ratingVacancies.put(user, points);
             }
@@ -39,7 +51,7 @@ public class StatService {
 
         return ratingVacancies.entrySet().stream()
                 .filter(entry -> entry.getValue() >= minCountMatch)
-                .sorted(Comparator.comparing(entry -> entry.getKey().getFirstName()))
+                .sorted(Map.Entry.comparingByKey(Comparator.comparing(User::getFirstName)))
                 .map(Map.Entry::getKey)
                 .toList();
     }
