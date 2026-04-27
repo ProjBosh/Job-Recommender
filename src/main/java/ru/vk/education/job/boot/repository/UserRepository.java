@@ -17,14 +17,8 @@ public class UserRepository {
     private final AtomicLong idGenerator = new AtomicLong(1);
 
     public boolean existsByField(String firstName, Set<String> skills, int experience) {
-        Set<String> safeSkills = skills != null ? skills : Set.of();
-
         return storage.values().stream()
-                .anyMatch(user ->
-                        user.getFirstName().equals(firstName) &&
-                        user.getSkills().equals(safeSkills) &&
-                        user.getExperience() == experience
-                );
+                .anyMatch(user -> user.getFirstName().equals(firstName));
     }
 
     public boolean isPresent(Long id) {

@@ -21,7 +21,7 @@ public class UserService {
     }
 
     public boolean isDuplicate(String firstName, Set<String> skills, int experience) {
-        return userRepository.existsByField(firstName, skills, experience);
+        return userRepository.existsByField(firstName);
     }
 
     public boolean isPresent(User user) {
