@@ -38,9 +38,12 @@ public class SuggestService {
 
     public void findBestVacancies() {
         for(User user : userRepository.findAll()) {
-            Vacancy bestVacancy = getTopSuggestVacancy(user, 1).get(0);
-            System.out.println(user.getFirstName() + ", лучшее предложение - " +
+            List<Vacancy> listVacancy = getTopSuggestVacancy(user, 1);
+            if(!listVacancy.isEmpty()) {
+                Vacancy bestVacancy = listVacancy.get(0);
+                System.out.println(user.getFirstName() + ", лучшее предложение - " +
                         bestVacancy.getJobName() + " at " + bestVacancy.getCompany());
+            }
         }
     }
 }
