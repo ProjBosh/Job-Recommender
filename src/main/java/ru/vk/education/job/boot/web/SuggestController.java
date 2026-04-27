@@ -24,7 +24,7 @@ public class SuggestController {
     @Value("${suggest.top.limit:2}")
     private int topVacancyLimit;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/for-user/{userId}")
     public ResponseEntity<List<Vacancy>> getSuggestVacancy(@PathVariable Long userId) {
         User user = userService.getUser(userId);
         return ResponseEntity.ok(suggestService.getTopSuggestVacancy(user, topVacancyLimit));
