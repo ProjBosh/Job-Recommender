@@ -19,15 +19,11 @@ public class VacancyRepository {
     private final Map<Long, Vacancy> storage = new ConcurrentHashMap<>();
     private final AtomicLong idGenerator = new AtomicLong();
 
-    public boolean existsByField(String jobName, String company, Set<String> tags, int experience) {
-        Set<String> safeTags = tags != null ? tags : Set.of();
-
+    public boolean existsByField(String jobName, String company) {
         return storage.values().stream()
                 .anyMatch(vacancy ->
                         vacancy.getJobName().equals(jobName) &&
-                        vacancy.getCompany().equals(company) &&
-                        vacancy.getTags().equals(safeTags) &&
-                        vacancy.getExperience() == experience
+                        vacancy.getCompany().equals(company)
                 );
     }
 

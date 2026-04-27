@@ -22,7 +22,7 @@ public class VacancyService {
     }
 
     public boolean isDuplicate(String jobName, String company, Set<String> tags, int experience) {
-        return vacancyRepository.existsByField(jobName, company, tags, experience);
+        return vacancyRepository.existsByField(jobName, company);
     }
 
     public boolean isPresent(Vacancy vacancy) {
