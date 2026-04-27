@@ -36,7 +36,7 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Пользователь с id " + id + " не найден"));
     }
 
-    public User addUser(String firstName, Set<String> skills, int experience) {
+    public User create(String firstName, Set<String> skills, int experience) {
         User user = new User(null, firstName, skills, experience);
         return userRepository.save(user);
     }

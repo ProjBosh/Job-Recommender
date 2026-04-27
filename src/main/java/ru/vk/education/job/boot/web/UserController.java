@@ -32,7 +32,7 @@ public class UserController {
                     .status(HttpStatus.CONFLICT)    // HTTP 409 Conflict
                     .body(Map.of("error", "Пользователь с такими данными уже существует"));
         }
-        User user = userService.addUser(request.getFirstName(), uniqueSkills, request.getExperience());
+        User user = userService.create(request.getFirstName(), uniqueSkills, request.getExperience());
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 }
