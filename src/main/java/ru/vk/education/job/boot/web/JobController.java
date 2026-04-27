@@ -32,7 +32,7 @@ public class JobController {
                     .status(HttpStatus.CONFLICT)    // HTTP 409 Conflict
                     .body(Map.of("error", "Вакансия с такими данными уже существует"));
         }
-        Vacancy vacancy = vacancyService.addVacancy(request.getJobName(), request.getCompany(), uniqueTags, request.getExperience());
+        Vacancy vacancy = vacancyService.create(request.getJobName(), request.getCompany(), uniqueTags, request.getExperience());
         return ResponseEntity.status(HttpStatus.CREATED).body(vacancy);
     }
 }

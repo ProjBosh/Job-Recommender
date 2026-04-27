@@ -43,7 +43,7 @@ public class VacancyService {
                 .count();
     }
 
-    public Vacancy addVacancy(String jobName, String company, Set<String> tags, int experience) {
+    public Vacancy create(String jobName, String company, Set<String> tags, int experience) {
         Vacancy vacancy = new Vacancy(null, jobName, company, tags, experience);
         return vacancyRepository.save(vacancy);
     }
