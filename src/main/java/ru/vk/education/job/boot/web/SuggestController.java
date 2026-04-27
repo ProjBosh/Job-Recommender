@@ -2,6 +2,7 @@ package ru.vk.education.job.boot.web;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;  // ← правильный импорт
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,9 @@ public class SuggestController {
     @GetMapping("/for-user/{userId}")
     public ResponseEntity<List<Vacancy>> getSuggestVacancy(@PathVariable Long userId) {
         User user = userService.getUser(userId);
+        if(user == null) {
+            return ResponseEntity.notFound().build(); // HTTP 404
+        }
         return ResponseEntity.ok(suggestService.getTopSuggestVacancy(user, topVacancyLimit));
     }
 }

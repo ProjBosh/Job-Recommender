@@ -31,7 +31,12 @@ public class StatController {
         if (experience < 0) {
             experience = 0;
         }
-        return ResponseEntity.ok(statService.getMatchesVacancy(experience));
+
+        List<Vacancy> listVacancy = statService.getMatchesVacancy(experience);
+        if(listVacancy.isEmpty()) {
+            return ResponseEntity.notFound().build(); // HTTP 404
+        }
+        return ResponseEntity.ok(listVacancy);
     }
 
     /**
@@ -46,7 +51,12 @@ public class StatController {
         if (matchCount < 0) {
             matchCount = 0;
         }
-        return ResponseEntity.ok(statService.getMatchesUser(matchCount));
+
+        List<User> listUser = statService.getMatchesUser(matchCount);
+        if(listUser.isEmpty()) {
+            return ResponseEntity.notFound().build(); // HTTP 404
+        }
+        return ResponseEntity.ok(listUser);
     }
 
     /**
@@ -61,6 +71,11 @@ public class StatController {
         if (skillCount < 0) {
             skillCount = 0;
         }
-        return ResponseEntity.ok(statService.getTopSkills(skillCount));
+
+        List<String> listSkills = statService.getTopSkills(skillCount);
+        if(listSkills.isEmpty()) {
+            return ResponseEntity.notFound().build(); // HTTP 404
+        }
+        return ResponseEntity.ok(listSkills);
     }
 }
