@@ -18,18 +18,18 @@ import java.util.Set;
 public class JobController {
     private final VacancyService vacancyService;
 
-    @GetMapping("/all-vacancies")
+    @GetMapping("/jobs")
     public ResponseEntity<List<Vacancy>> getAllVacancies() {
         return ResponseEntity.ok(vacancyService.getAllVacancies());
     }
 
-    @PostMapping("/add-vacancy")
+    @PostMapping("/jobs")
     public ResponseEntity<?> addVacancy(@RequestBody Vacancy request) {
         Set<String> uniqueTags = new HashSet<>(request.getTags());
 
         if(vacancyService.isDuplicate(request.getJobName(), request.getCompany(), uniqueTags, request.getExperience())) {
             return ResponseEntity
-                    .status(HttpStatus.CONFLICT)    // 409 Conflict
+                    .status(HttpStatus.CONFLICT)    // HTTP 409 Conflict
                     .body(Map.of("error", "Вакансия с такими данными уже существует"));
         }
         Vacancy vacancy = vacancyService.addVacancy(request.getJobName(), request.getCompany(), uniqueTags, request.getExperience());

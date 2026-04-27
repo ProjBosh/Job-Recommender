@@ -18,18 +18,18 @@ import java.util.Set;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/all-users")
+    @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @PostMapping("/add-user")
+    @PostMapping("/users")
     public ResponseEntity<?> addUser(@RequestBody User request) {
         Set<String> uniqueSkills = new HashSet<>(request.getSkills());
 
         if(userService.isDuplicate(request.getFirstName(), uniqueSkills, request.getExperience())) {
             return ResponseEntity
-                    .status(HttpStatus.CONFLICT)    // 409 Conflict
+                    .status(HttpStatus.CONFLICT)    // HTTP 409 Conflict
                     .body(Map.of("error", "Пользователь с такими данными уже существует"));
         }
         User user = userService.addUser(request.getFirstName(), uniqueSkills, request.getExperience());
