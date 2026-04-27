@@ -15,8 +15,4 @@ public class Vacancy {
     private String company;
     private Set<String> tags = new HashSet<>();
     private int experience;
-
-    public String getSkillsToString() {
-        return String.join(",", getTags());
-    }
 }

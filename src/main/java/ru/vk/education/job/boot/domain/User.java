@@ -17,8 +17,4 @@ public class User {
     private String firstName;
     private Set<String> skills = new HashSet<>();
     private int experience;
-
-    public String getSkillsToString() {
-        return String.join(",", getSkills());
-    }
 }
