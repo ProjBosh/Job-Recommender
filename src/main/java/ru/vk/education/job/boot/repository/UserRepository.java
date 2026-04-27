@@ -16,7 +16,7 @@ public class UserRepository {
     private final Map<Long, User> storage = new ConcurrentHashMap<>();
     private final AtomicLong idGenerator = new AtomicLong(1);
 
-    public boolean existsByField(String firstName, Set<String> skills, int experience) {
+    public boolean existsByField(String firstName) {
         return storage.values().stream()
                 .anyMatch(user -> user.getFirstName().equals(firstName));
     }
