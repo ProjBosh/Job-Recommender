@@ -1,0 +1,40 @@
+ru.vk.education.job/
+│
+├── cli/                                    # Консольный клиент
+│   ├── model/
+│   │   ├── model/
+│   │   │   ├── User.java
+│   │   │   └── Vacancy.java
+│   │   ├── rating/
+│   │   │   ├── RatingSkills.java
+│   │   │   └── RatingVacancy.java
+│   │   ├── repository/
+│   │   │   ├── RecommendationRepository.java
+│   │   │   ├── UserRepository.java
+│   │   │   └── VacancyRepository.java
+│   ├── service/
+│   │   ├── BestJobSuggestionService.java
+│   │   ├── FileService.java
+│   │   └── RecommendationService.java
+│   ├── CommandParser.java
+│   └── Main.java
+│
+└── boot/                                   # Web / Spring Boot модуль
+    ├── domain/
+    │   ├── User.java
+    │   └── Vacancy.java
+    ├── repository/
+    │   ├── UserRepository.java
+    │   └── VacancyRepository.java
+    ├── service/
+    │   ├── BestJobSuggestionsService.java
+    │   ├── StatService.java
+    │   ├── SuggestService.java
+    │   ├── UserService.java
+    │   └── VacancyService.java
+    ├── web/
+    │   ├── JobController.java
+    │   ├── StatController.java
+    │   ├── SuggestController.java
+    │   └── UserController.java
+    └── TestApp.java
