@@ -1,0 +1,12 @@
+-- -- Indexes for linking table
+-- CREATE INDEX index_user_skills_user_id ON user_skills(user_id);
+-- CREATE INDEX index_user_skills_skill_id ON user_skills(skill_id);
+--
+-- -- Unique index for name skills
+-- CREATE UNIQUE INDEX index_skills_name_lower ON skills(LOWER(name));
+--
+-- -- The index for searching by first name user
+-- CREATE INDEX index_users_first_name ON users(first_name);
+--
+-- -- The index for searching by experience user
+-- CREATE INDEX index_users_experience ON users(experience);
