@@ -7,13 +7,14 @@ import lombok.AllArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    private Long id;
+    private UUID id;
     private String firstName;
     private Set<String> skills = new HashSet<>();
     private int experience;
