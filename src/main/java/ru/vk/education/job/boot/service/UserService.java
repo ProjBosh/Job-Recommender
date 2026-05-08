@@ -26,13 +26,6 @@ public class UserService {
 //        return userRepository.existsByField(firstName);
     }
 
-//    public boolean isPresent(User user) {
-//        if(user == null || user.getId() == null) {
-//            return false;
-//        }
-//        return userRepository.isPresent(user.getId());
-//    }
-
     public User getUser(Long id) {
         return null;
 //        return userRepository.findById(id)

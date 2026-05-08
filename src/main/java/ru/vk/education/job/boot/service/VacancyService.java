@@ -16,25 +16,21 @@ public class VacancyService {
     private final VacancyRepository vacancyRepository;
 
     public List<Vacancy> getAllVacancies() {
-        return vacancyRepository.findAll().stream()
-                .sorted(Comparator.comparing(Vacancy::getJobName))
-                .toList();
+        return null;
+//        return vacancyRepository.findAll().stream()
+//                .sorted(Comparator.comparing(Vacancy::getJobName))
+//                .toList();
     }
 
     public boolean isDuplicate(String jobName, String company, Set<String> tags, int experience) {
-        return vacancyRepository.existsByField(jobName, company);
-    }
-
-    public boolean isPresent(Vacancy vacancy) {
-        if(vacancy == null || vacancy.getId() == null){
-            return false;
-        }
-        return vacancyRepository.isPresent(vacancy.getId());
+        return false;
+//        return vacancyRepository.existsByField(jobName, company);
     }
 
     public Vacancy getVacancy(Long id) {
-        return vacancyRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Вакансия в id " + id + " не найдена"));
+        return null;
+//        return vacancyRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Вакансия в id " + id + " не найдена"));
     }
 
     /**
@@ -45,13 +41,15 @@ public class VacancyService {
      * @return Количество совпадающих навыков
      */
     public long getTheNumberOfMatchingSkills(Vacancy vacancy, User user) {
-        return vacancy.getTags().stream()
-                .filter(user.getSkills()::contains)
-                .count();
+        return 0;
+//        return vacancy.getTags().stream()
+//                .filter(user.getSkills()::contains)
+//                .count();
     }
 
     public Vacancy create(String jobName, String company, Set<String> tags, int experience) {
-        Vacancy vacancy = new Vacancy(null, jobName, company, tags, experience);
-        return vacancyRepository.save(vacancy);
+        return null;
+//        Vacancy vacancy = new Vacancy(null, jobName, company, tags, experience);
+//        return vacancyRepository.save(vacancy);
     }
 }
