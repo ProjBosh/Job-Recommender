@@ -4,16 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.vk.education.job.boot.domain.User;
 import ru.vk.education.job.boot.domain.Vacancy;
-import ru.vk.education.job.boot.repository.VacancyRepository;
+import ru.vk.education.job.boot.repository.JobRepository;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class VacancyService {
-    private final VacancyRepository vacancyRepository;
+    private final JobRepository jobRepository;
 
     public List<Vacancy> getAllVacancies() {
         return null;

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.vk.education.job.boot.domain.User;
 import ru.vk.education.job.boot.domain.Vacancy;
 import ru.vk.education.job.boot.repository.UserRepository;
-import ru.vk.education.job.boot.repository.VacancyRepository;
+import ru.vk.education.job.boot.repository.JobRepository;
 
 import java.util.*;
 
@@ -13,7 +13,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class StatService {
     private final UserRepository userRepository;
-    private final VacancyRepository vacancyRepository;
+    private final JobRepository jobRepository;
     private final VacancyService vacancyService;
 
     /**
@@ -23,7 +23,7 @@ public class StatService {
      * @return Список вакансий
      */
     public List<Vacancy> getMatchesVacancy(int minExperience) {
-        return vacancyRepository.findAll().stream()
+        return jobRepository.findAll().stream()
                 .filter(v -> v.getExperience() >= minExperience)
                 .toList();
     }
@@ -40,7 +40,7 @@ public class StatService {
 
         // 1. Индексируем вакансии по навыкам (один раз)
         Map<String, List<Vacancy>> vacanciesBySkill = new HashMap<>();
-        for (Vacancy vacancy : vacancyRepository.findAll()) {
+        for (Vacancy vacancy : jobRepository.findAll()) {
             for (String tag : vacancy.getTags()) {
                 vacanciesBySkill.computeIfAbsent(tag, k -> new ArrayList<>()).add(vacancy);
             }

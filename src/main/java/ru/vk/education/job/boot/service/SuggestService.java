@@ -5,14 +5,14 @@ import org.springframework.stereotype.Service;
 import ru.vk.education.job.boot.domain.User;
 import ru.vk.education.job.boot.domain.Vacancy;
 import ru.vk.education.job.boot.repository.UserRepository;
-import ru.vk.education.job.boot.repository.VacancyRepository;
+import ru.vk.education.job.boot.repository.JobRepository;
 
 import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class SuggestService {
-    private final VacancyRepository vacancyRepository;
+    private final JobRepository jobRepository;
     private final UserRepository userRepository;
     private final VacancyService vacancyService;
 
@@ -26,7 +26,7 @@ public class SuggestService {
     public List<Vacancy> getTopSuggestVacancy(User user, int countVacancy) {
         Map<Vacancy, Double> ratingSuggestVacancy = new HashMap<>();
 
-        for(Vacancy vacancy : vacancyRepository.findAll()) {
+        for(Vacancy vacancy : jobRepository.findAll()) {
             int matchCountSkills = (int) vacancyService.getTheNumberOfMatchingSkills(vacancy, user);
             double points = matchCountSkills > 0 && user.getExperience() >= vacancy.getExperience()
                             ? matchCountSkills
