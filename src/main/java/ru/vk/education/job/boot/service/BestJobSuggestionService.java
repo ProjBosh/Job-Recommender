@@ -12,6 +12,6 @@ public class BestJobSuggestionService {
 
     @Scheduled(fixedRate = periodDelay, initialDelay = 0)
     public void findBestVacancy() {
-        suggestService.findBestVacancies();
+        suggestService.findTheBestJobForAllUsers();
     }
 }

@@ -1,5 +1,6 @@
 package ru.vk.education.job.boot.service;
 
+import com.github.dockerjava.api.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.vk.education.job.boot.domain.User;
@@ -15,6 +16,20 @@ public class SuggestService {
     private final JobRepository jobRepository;
     private final UserRepository userRepository;
     private final VacancyService vacancyService;
+
+    private static final int DEFAULT_VACANCY_COUNT = 2;
+
+    public List<Vacancy> suggest(String userName) {
+        User user = userRepository.findByFirstName(userName)
+                .orElseThrow(() -> new NotFoundException("User not found: " + userName));
+        return getTopSuggestVacancy(user, DEFAULT_VACANCY_COUNT);
+    }
+
+    public List<Vacancy> suggest(String userName, int countVacancy) {
+        User user = userRepository.findByFirstName(userName)
+                .orElseThrow(() -> new NotFoundException("User not found: " + userName));
+        return getTopSuggestVacancy(user, countVacancy);
+    }
 
     /**
      * Получить Топ-N вакансий, подходящих пользователю
@@ -46,7 +61,7 @@ public class SuggestService {
     /**
      * Подобрать лучшую вакансию для пользователей
      */
-    public void findBestVacancies() {
+    public void findTheBestJobForAllUsers() {
         for(User user : userRepository.findAll()) {
             List<Vacancy> listVacancy = getTopSuggestVacancy(user, 1);
             if(!listVacancy.isEmpty()) {
