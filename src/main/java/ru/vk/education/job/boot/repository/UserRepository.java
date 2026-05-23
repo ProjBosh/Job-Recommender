@@ -86,6 +86,22 @@ public class UserRepository {
         }
     }
 
+    public Optional<User> findByFirstName(String userName) {
+        String sql = """
+            SELECT u.first_name
+            FROM users u
+            WHERE u.first_name = :userName
+        """;
+
+        try {
+            User user = jdbcTemplate.queryForObject(sql, Map.of("userName", userName), userRowMapper);
+
+            return Optional.ofNullable(user);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
     public List<User> findAll() {
         String sql = """
                 SELECT u.id, u.first_name, u.experience, array_agg(s.name) as skills
